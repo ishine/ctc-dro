@@ -2,6 +2,8 @@
 
 We provide a minimal implementation of CTC-DRO in `dro_ctc.py` and the batch sampler enabling length-matched group losses in `duration_language_batch_sampler.py`. These files are intended to be used inside the [ESPNet](https://github.com/espnet/espnet) framework. However, they can be used with other codebases as well, as long as inputs are passed to them in compatible formats.
 
+To reproduce the results reported in the [CTC-DRO paper](https://arxiv.org/abs/2502.01777), please refer to our codebase inside the ESPNet framework, which can be found [here](https://github.com/Bartelds/espnet/tree/master/egs2/asr_dro/asr1). 
+
 ## Batching
 
 The `DurationBatchSampler` inside `duration_language_batch_sampler.py` returns a list of batches such that each batch contains data points from some group, with durations summing up to a provided `duration_batch_length`. It further shuffles these batches such that batches from different groups are distributed uniformly in the list. It requires
@@ -34,4 +36,11 @@ loss_fn.init_weights(train_dir, valid_dir)
 loss = loss_fn(log_probs, targets, input_lengths, target_lengths, utt_id)
 ```
 
-An explanation of these arguments can be found in the file.
+Arguments:
+```
+    log_probs: Log-probs from the model for the current batch
+    targets: Transcript tokens for each example in the current batch
+    input_lengths: Length of input audio for each example in the current batch
+    target_lengths: Length of transcript for each example in the current batch
+    utt_id: data_point_id for each data point in the current batch (for mapping to groups)
+```
