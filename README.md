@@ -108,7 +108,7 @@ To integrate the CTC-DRO loss into your codebase, follow these steps:
     loss = loss_fn(log_probs, targets, input_lengths, target_lengths, utt_id)
     ```
 
-    The function returns the DRO-scaled loss for training purposes, and it returns the standard CTC loss during validation.
+    The function returns the CTC-DRO scaled loss for training purposes, and it returns the standard CTC loss during validation.
 
 ---
 
