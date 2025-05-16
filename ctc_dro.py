@@ -115,7 +115,7 @@ class DROCTCLoss(torch.nn.Module):
             # Perform the CTC-DRO group weight update
             for _ in self.group_losses:
                 update_term = sum(self.group_losses[_])/len(self.group_losses[_])
-                if self.laplace_smoothing > 0:
+                if self.smoothing > 0:
                     # Use smoothing
                     self.dro_q[_] *= torch.exp((update_term * step_size)/(self.dro_q[_] + self.smoothing))
                     print("Update Magnitude", torch.exp((update_term * step_size)/(self.dro_q[_] + self.smoothing)))
